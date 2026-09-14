@@ -44,7 +44,7 @@ public class WordleGame {
     public void run() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Введите exit для выхода");
-        while(steps > 0) {
+        while (steps > 0) {
             try {
                 System.out.println("Введите слово:");
                 String word = scanner.nextLine();
