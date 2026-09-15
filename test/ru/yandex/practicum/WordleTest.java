@@ -90,7 +90,7 @@ class WordleTest {
     }
 
     @Test
-    public void testWordleGameCorrectAnswer() {
+    public void testWordleGameGetCompareStringCorrectAnswer() {
         String simulatedInput = "Тестт\nexit";
         try (PrintWriter log = new PrintWriter("testLog.txt");) {
             // Подменяем системный ввод нашей строкой
@@ -98,7 +98,7 @@ class WordleTest {
             WordleDictionary dictionary = new WordleDictionary();
             dictionary.add("тестт");
             WordleGame wordleGame = new WordleGame("тестт", 6, dictionary, log);
-            wordleGame.run();
+            Assertions.assertEquals("+++++", wordleGame.getCompareString("тестт"));
         } catch (Exception e) {
 
         }
