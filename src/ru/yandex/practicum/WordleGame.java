@@ -96,10 +96,11 @@ public class WordleGame {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < answer.length(); i++) {
             int index = answer.indexOf(word.charAt(i));
+            int sameIndex = answer.indexOf(word.charAt(i),i);
             if (index == -1) {
                 builder.append("-");
                 incompatibleCharacters.add(word.charAt(i));
-            } else if (index == i) {
+            } else if (sameIndex == i) {
                 builder.append("+");
                 sameCharacters.put(word.charAt(i), i);
             } else {
