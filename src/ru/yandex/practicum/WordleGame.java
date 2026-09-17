@@ -92,7 +92,7 @@ public class WordleGame {
         }
     }
 
-    public String generateTip(WordleDictionary dictionary) throws EmptyListOfWirds{
+    public String generateTip(WordleDictionary dictionary) throws EmptyListOfWirds {
         Random random = new Random();
         if (dictionary.getWords().isEmpty()) {
             throw new EmptyListOfWirds("Словарь пуст");
