@@ -1,9 +1,6 @@
 package ru.yandex.practicum;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /*
 этот класс содержит в себе список слов List<String>
@@ -31,11 +28,12 @@ public class WordleDictionary {
         return words;
     }
 
-    public WordleDictionary leaveCompatibleWords(List<Character> incompatibleCharacters, List<Character> compatibleCharacters, Map<Character, Integer> sameCharacters) {
+    public WordleDictionary leaveCompatibleWords(Set<Character> incompatibleCharacters, Set<Character> compatibleCharacters, Map<Character, Integer> sameCharacters) {
         List<String> wordsToRemove = new ArrayList<>();
         for (String word : words) {
-            for (Character character : incompatibleCharacters) {
-                if (word.contains(character.toString())) {
+            char[] wordArray = word.toCharArray();
+            for (char wordChar : wordArray) {
+                if (incompatibleCharacters.contains(wordChar)) {
                     wordsToRemove.add(word);
                     break;
                 }

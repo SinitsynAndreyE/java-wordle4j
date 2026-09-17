@@ -7,10 +7,7 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.FileReader;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -50,8 +47,8 @@ class WordleTest {
     public void testWordleDictionaryLeaveCompatibleWords() {
         WordleDictionary dictionary = new WordleDictionary();
         dictionary.add("Тест");
-        List<Character> incompatibleCharacters = new ArrayList<>(List.of('е'));
-        dictionary = dictionary.leaveCompatibleWords(incompatibleCharacters, new ArrayList<>(), new HashMap<>());
+        Set<Character> incompatibleCharacters = new HashSet<>(List.of('е'));
+        dictionary = dictionary.leaveCompatibleWords(incompatibleCharacters, new HashSet<>(), new HashMap<>());
         Assertions.assertEquals(Collections.emptyList(), dictionary.getWords());
     }
 

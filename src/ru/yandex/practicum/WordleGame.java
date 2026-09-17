@@ -25,9 +25,9 @@ public class WordleGame {
 
     private final PrintWriter log;
 
-    private List<Character> incompatibleCharacters;
+    private Set<Character> incompatibleCharacters;
 
-    private List<Character> compatibleCharacters;
+    private Set<Character> compatibleCharacters;
 
     private Map<Character, Integer> sameCharacters;
 
@@ -36,8 +36,8 @@ public class WordleGame {
         this.steps = steps;
         this.dictionary = dictionary;
         this.log = log;
-        incompatibleCharacters = new ArrayList<>();
-        compatibleCharacters = new ArrayList<>();
+        incompatibleCharacters = new HashSet<>();
+        compatibleCharacters = new HashSet<>();
         sameCharacters = new HashMap<>();
     }
 
@@ -55,6 +55,7 @@ public class WordleGame {
                 if (word.isEmpty()) {
                     word = generateTip(dictionary);
                     System.out.println(word);
+                    log.write("Подсказка: " + word + "\n");
                 }
                 if (word.length() != 5) {
                     System.out.println("Слово должно состоять из 5 символов");
@@ -67,7 +68,10 @@ public class WordleGame {
                     break;
                 } else {
                     steps--;
-                    System.out.println(getCompareString(word));
+                    String compareString = getCompareString(word);
+                    System.out.println(compareString);
+                    log.write("Ввдено слово: " + word + "\n");
+                    log.write("Строка сравнения: " + compareString + "\n");
                     dictionary = dictionary.leaveCompatibleWords(incompatibleCharacters, compatibleCharacters, sameCharacters);
                     incompatibleCharacters.clear();
                     compatibleCharacters.clear();
@@ -76,6 +80,8 @@ public class WordleGame {
             } catch (WordNotFoundInDictionary e) {
                 log.write(e.getMessage() + "\n");
             } catch (NoSuchLength e) {
+                log.write(e.getMessage() + "\n");
+            } catch (EmptyListOfWirds e) {
                 log.write(e.getMessage() + "\n");
             } catch (Exception e) {
                 log.write("Неизвестная ошибка: " + e.getMessage());
@@ -86,10 +92,14 @@ public class WordleGame {
         }
     }
 
-    public String generateTip(WordleDictionary dictionary) {
+    public String generateTip(WordleDictionary dictionary) throws EmptyListOfWirds{
         Random random = new Random();
-        List<String> words = dictionary.getWords();
-        return words.get(random.nextInt(words.size()));
+        if (dictionary.getWords().isEmpty()) {
+            throw new EmptyListOfWirds("Словарь пуст");
+        } else {
+            List<String> words = dictionary.getWords();
+            return words.get(random.nextInt(words.size()));
+        }
     }
 
     public String getCompareString(String word) {
